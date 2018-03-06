@@ -1,6 +1,6 @@
 var Cookielaw = {
 
-    createCookie: function (name, value, days) {
+    _create_cookie: function(name, value, days) {
         var date = new Date(),
             expires = '';
         if (days) {
@@ -12,14 +12,21 @@ var Cookielaw = {
         document.cookie = name + "=" + value + expires + "; path=/";
     },
 
-    createCookielawCookie: function () {
-        this.createCookie('cookielaw_accepted', '1', 10 * 365);
+    accept: function() {
+        this._create_cookie('cookielaw_accepted', '1', 10 * 365);
+        this.close()
+    },
 
-        if (typeof (window.jQuery) === 'function') {
-            jQuery('#CookielawBanner').slideUp();
-        } else {
-            document.getElementById('CookielawBanner').style.display = 'none';
-        }
+    show: function() {
+        jQuery('#cookielaw-banner .message').slideDown("slow");
+    },
+
+    close: function() {
+        jQuery('#cookielaw-banner .message').slideUp("slow");
     }
 
 };
+
+jQuery(document).ready(function() {
+    Cookielaw.show();
+});
